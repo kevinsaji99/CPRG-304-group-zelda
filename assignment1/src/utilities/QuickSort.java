@@ -5,12 +5,16 @@ import java.util.Comparator;
 import products.Product;
 
 /**
- * Quick sort utility that sorts products in descending order.
+ * Quick sort utility that arranges products in descending order.
  *
  * @author Gaurab Sapkota
  */
 public final class QuickSort
 {
+    private QuickSort()
+    {
+    }
+
     public static void sort(Product[] array)
     {
         quickSort(array, null);
@@ -18,13 +22,20 @@ public final class QuickSort
 
     public static void sort(Product[] array, Comparator<Product> comp)
     {
+        if (array == null || array.length < 2)
+        {
+            return;
+        }
+
         quickSort(array, 0, array.length - 1, comp);
     }
 
-    private static void quickSort(Product[] array, int low, int high,
-            Comparator<Product> comp)
+    private static void quickSort(Product[] array,
+                                  int low,
+                                  int high,
+                                  Comparator<Product> comp)
     {
-        if (array == null || low >= high)
+        if (low >= high)
         {
             return;
         }
@@ -46,7 +57,7 @@ public final class QuickSort
             int result = compare(array[current], pivot, comp);
 
             // Descending order:
-            // larger values move left
+            // larger elements move left
             if (result > 0)
             {
                 swap(array, greater, current);
@@ -69,9 +80,9 @@ public final class QuickSort
     }
 
     private static Product medianOfThree(Product first,
-            Product second,
-            Product third,
-            Comparator<Product> comp)
+                                         Product second,
+                                         Product third,
+                                         Comparator<Product> comp)
     {
         if (compare(first, second, comp) < 0)
         {
@@ -106,8 +117,8 @@ public final class QuickSort
     }
 
     private static int compare(Product p1,
-            Product p2,
-            Comparator<Product> comp)
+                               Product p2,
+                               Comparator<Product> comp)
     {
         if (comp == null)
         {
@@ -120,8 +131,8 @@ public final class QuickSort
     }
 
     private static void swap(Product[] array,
-            int first,
-            int second)
+                             int first,
+                             int second)
     {
         Product temp = array[first];
         array[first] = array[second];
