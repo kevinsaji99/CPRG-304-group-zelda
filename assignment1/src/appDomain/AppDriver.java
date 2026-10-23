@@ -1,3 +1,12 @@
+/**
+ * Assignment 1 - By @author TeamZelda
+ * <p>
+ * Members Involved
+ * 1. Tejanpreet Singh Dherdi
+ * 2. Kevin Mathew Saji
+ * 3. Adrian Gorny
+ * 4. Gaurab Sapkota
+ */
 package appDomain;
 
 import java.io.FileNotFoundException;
@@ -19,27 +28,37 @@ import utilities.SelectionSort;
 import exceptions.InvalidProductDataException;
 
 /**
- * Entry point for the sorting benchmark application.
- * <p>
- * Reads a product data file named on the command line, sorts the products in
- * descending order using the requested algorithm and comparison property, and
- * reports the elapsed sort time along with a sample of the sorted results.
- * </p>
- * <p>
- * Usage: java -jar Sort.jar -f&lt;file&gt; -t&lt;o|u|d&gt; -s&lt;b|s|i|m|q|z&gt;
- * </p>
+ * Entry point for the sorting benchmark application. Reads a product data
+ * file named on the command line, sorts the products in descending order using
+ * the requested algorithm and property, and reports the sort time along with a
+ * sample of the sorted results.
+ *
+ * @author Tejanpreet Singh Dherdi 
  */
  
 public class AppDriver
 {
 
+	/**
+	 * Parses the command line arguments, loads the products, runs the chosen
+	 * sort with timing, and displays the results. 
+	 * 
+	 *  Expects three arguments in any order: 
+	 *  -f followed by the file name,
+     *  -t followed by o, u or d, and 
+     *  -s followed by b, s, i, m, q or z.
+	 *
+	 * Invalid input produces an explanatory message instead of an exception.
+	 *
+	 * @param args (the command line arguments)
+	 */
 	public static void main( String[] args )
 	{
 		String fileName = null;
 		char compareType = 0;
 		char sortAlg = 0;
 		
-		// Arguments may appear in any order, so inspect each flag individually.
+		// Arguments may appear in any order, so each flag is inspected individually.
 		
 		for (String arg : args) {
 			if( arg.length() < 3 || arg.charAt( 0 ) != '-' )
@@ -54,7 +73,7 @@ public class AppDriver
 			switch(flag)
 			{
 				case 'f':
-					fileName = value.strip(); // some change 
+					fileName = stripQuotes(value); 
 					break;
 				
 				case 't':
@@ -124,6 +143,22 @@ public class AppDriver
 		displayResults( products, compareType );
 		System.out.println( sortName( sortAlg ) + " run time was: " + elapsed + " milliseconds" );
 		
+	}
+	
+	/**
+	 * Removes a matching pair of surrounding double quotes from a path.
+	 *
+	 * @param value the raw argument value
+	 * @return the value without wrapping quotes
+	 */
+	private static String stripQuotes( String value )
+	{
+		if( value.length() >= 2 && value.startsWith( "\"" ) && value.endsWith( "\"" ) )
+		{
+			return value.substring( 1, value.length() - 1 );
+		}
+
+		return value;
 	}
 	
 	/**
