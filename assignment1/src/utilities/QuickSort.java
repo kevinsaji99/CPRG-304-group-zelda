@@ -17,7 +17,7 @@ public final class QuickSort
 
     public static void sort(Product[] array)
     {
-        quickSort(array, null);
+        sort(array, null);
     }
 
     public static void sort(Product[] array, Comparator<Product> comp)
