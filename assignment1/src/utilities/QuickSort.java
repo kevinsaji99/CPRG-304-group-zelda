@@ -2,97 +2,140 @@ package utilities;
 
 import java.util.Comparator;
 
+import products.Product;
+
 /**
+ * Quick sort utility that arranges products in descending order.
+ *
  * @author Gaurab Sapkota
  */
+public final class QuickSort
+{
+    private QuickSort()
+    {
+    }
 
-public class QuickSort {
+    public static void sort(Product[] array)
+    {
+        sort(array, null);
+    }
 
-  
-    public static <T> void sort(T[] array, Comparator<? super T> comparator) {
-        if (comparator == null) {
-            throw new IllegalArgumentException(
-                    "Comparator cannot be null.");
-        }
-
-        if (array == null || array.length < 2) {
+    public static void sort(Product[] array, Comparator<Product> comp)
+    {
+        if (array == null || array.length < 2)
+        {
             return;
         }
 
-        quickSort(array, 0, array.length - 1, comparator);
+        quickSort(array, 0, array.length - 1, comp);
     }
 
-
-
-
-  
-    private static <T> void quickSort(
-            T[] array, int low, int high,
-            Comparator<? super T> comparator) {
-
-        if (low >= high) {
+    private static void quickSort(Product[] array,
+                                  int low,
+                                  int high,
+                                  Comparator<Product> comp)
+    {
+        if (low >= high)
+        {
             return;
         }
 
         int middle = low + (high - low) / 2;
 
-        T pivot = medianOfThree(
-                array[low], array[middle], array[high], comparator);
+        Product pivot = medianOfThree(
+                array[low],
+                array[middle],
+                array[high],
+                comp);
 
         int greater = low;
         int current = low;
         int smaller = high;
 
-        while (current <= smaller) {
-            int result = comparator.compare(array[current], pivot);
+        while (current <= smaller)
+        {
+            int result = compare(array[current], pivot, comp);
 
-            if (result > 0) {
+            // Descending order:
+            // larger elements move left
+            if (result > 0)
+            {
                 swap(array, greater, current);
                 greater++;
                 current++;
-            } else if (result < 0) {
+            }
+            else if (result < 0)
+            {
                 swap(array, current, smaller);
                 smaller--;
-            } else {
+            }
+            else
+            {
                 current++;
             }
         }
 
-        quickSort(array, low, greater - 1, comparator);
-        quickSort(array, smaller + 1, high, comparator);
+        quickSort(array, low, greater - 1, comp);
+        quickSort(array, smaller + 1, high, comp);
     }
 
-
-
-  
-    private static <T> T medianOfThree(
-            T first, T second, T third,
-            Comparator<? super T> comparator) {
-
-        if (comparator.compare(first, second) < 0) {
-            if (comparator.compare(second, third) < 0) {
+    private static Product medianOfThree(Product first,
+                                         Product second,
+                                         Product third,
+                                         Comparator<Product> comp)
+    {
+        if (compare(first, second, comp) < 0)
+        {
+            if (compare(second, third, comp) < 0)
+            {
                 return second;
-            } else if (comparator.compare(first, third) < 0) {
+            }
+            else if (compare(first, third, comp) < 0)
+            {
                 return third;
-            } else {
+            }
+            else
+            {
                 return first;
             }
-        } else {
-            if (comparator.compare(first, third) < 0) {
+        }
+        else
+        {
+            if (compare(first, third, comp) < 0)
+            {
                 return first;
-            } else if (comparator.compare(second, third) < 0) {
+            }
+            else if (compare(second, third, comp) < 0)
+            {
                 return third;
-            } else {
+            }
+            else
+            {
                 return second;
             }
         }
     }
 
+    private static int compare(Product p1,
+                               Product p2,
+                               Comparator<Product> comp)
+    {
+        if (comp == null)
+        {
+            return p1.compareTo(p2);
+        }
+        else
+        {
+            return comp.compare(p1, p2);
+        }
+    }
 
-  
-    private static <T> void swap(T[] array, int first, int second) {
-        T temporary = array[first];
+    private static void swap(Product[] array,
+                             int first,
+                             int second)
+    {
+        Product temp = array[first];
         array[first] = array[second];
-        array[second] = temporary;
+        array[second] = temp;
     }
 }
