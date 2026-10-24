@@ -92,7 +92,7 @@ public class AppDriver
 		
 		if( fileName == null )
 		{
-			printUsage( "Missing required argument: -f<file_name>" );
+			printUsage( "Missing required filename : -f<file_name>" );
 			return;
 		}
 		
@@ -136,9 +136,9 @@ public class AppDriver
 		Comparator<Product> comp = resolveComparator( compareType );
 
 		// Time the sort only; file reading and display are excluded.
-		long start = System.currentTimeMillis();
+		long start = System.nanoTime();
 		runSort( products, sortAlg, comp );
-		long elapsed = System.currentTimeMillis() - start;
+		long elapsed = System.nanoTime() - start;
 
 		displayResults( products, compareType );
 		System.out.println( sortName( sortAlg ) + " run time was: " + elapsed + " milliseconds" );
@@ -148,7 +148,7 @@ public class AppDriver
 	/**
 	 * Removes a matching pair of surrounding double quotes from a path.
 	 *
-	 * @param value the raw argument value
+	 * @param value (the raw argument value)
 	 * @return the value without wrapping quotes
 	 */
 	private static String stripQuotes( String value )
@@ -164,7 +164,8 @@ public class AppDriver
 	/**
 	 * Returns the comparator matching the requested compare type.
 	 *
-	 * @param compareType o, u or d
+	 * @param compareType (o for original price, u for updated price, d for the calculated difference)
+	 * 
 	 * @return a Comparator, or null when natural ordering should be used
 	 */
 	private static Comparator<Product> resolveComparator( char compareType )
@@ -183,9 +184,9 @@ public class AppDriver
 	/**
 	 * Sorts the array in descending order using the requested algorithm.
 	 *
-	 * @param array   the products to sort, rearranged in place
-	 * @param sortAlg b, s, i, m, q or z
-	 * @param comp    the comparator to use, or null for natural ordering
+	 * @param array   (the products to sort, rearranged in place)
+	 * @param sortAlg (b, s, i, m, q or z)
+	 * @param comp    (the comparator to use, or null for natural ordering)
 	 */
 	private static void runSort( Product[] array, char sortAlg, Comparator<Product> comp )
 	{
@@ -213,10 +214,12 @@ public class AppDriver
 	}
 	
 	/**
-	 * Prints the sorted products at the interval required for the array size.
+	 * Prints the sorted products at the interval required for the array size:
+	 * every product for 10 or fewer, every 100th for 1000 or fewer, otherwise
+	 * every 1000th, always including the first and last.
 	 *
-	 * @param array       the sorted products
-	 * @param compareType the property that was sorted on, used for labelling
+	 * @param array       (the sorted products)
+	 * @param compareType (the property that was sorted on, used for labelling)
 	 */
 	private static void displayResults( Product[] array, char compareType )
 	{
@@ -251,8 +254,8 @@ public class AppDriver
 	/**
 	 * Builds the labelled value for a product based on the compare type.
 	 *
-	 * @param product     the product to describe
-	 * @param compareType o, u or d
+	 * @param product     (the product to describe)
+	 * @param compareType (o, u or d)
 	 * @return a label such as "Original Price: 92.99"
 	 */
 	private static String valueLabel( Product product, char compareType )
@@ -272,7 +275,7 @@ public class AppDriver
 	 * Returns the display name for a sort algorithm code.
 	 *
 	 * @param sortAlg b, s, i, m, q or z
-	 * @return the human readable algorithm name
+	 * @return the human readable and understandable algorithm name
 	 */
 	private static String sortName( char sortAlg )
 	{
@@ -290,7 +293,7 @@ public class AppDriver
 	/**
 	 * Prints an error message followed by the expected usage.
 	 *
-	 * @param message the specific problem found in the arguments
+	 * @param message (the specific problem found in the arguments)
 	 */
 	private static void printUsage( String message )
 	{
@@ -299,9 +302,9 @@ public class AppDriver
 		System.out.println( "  -f  file name and path, no space after the flag" );
 		System.out.println( "  -t  o = original price, u = updated price, d = calculated difference" );
 		System.out.println( "  -s  b = bubble, s = selection, i = insertion, m = merge, q = quick, z = custom" );
-		System.out.println( "Example: java -jar Sort.jar -fres/products1.txt -To -Sb" );
+		
 	}
-}
-}
+};
+
 
  
