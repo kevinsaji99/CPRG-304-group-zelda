@@ -15,9 +15,35 @@ import products.Skirts;
 import products.TShirts;
 
 
+/**
+ * Utility class that reads a product data file into a fixed-size array.
+ * <p>
+ * The first value in the file is the number of products, which sets the
+ * size of the array. Each following line holds a product type and two prices
+ * separated by spaces, for example: Shorts 5.25 23.36
+ * </p>
+ * <p>
+ * Any problem with the file's contents is reported with an
+ * {@link InvalidProductDataException} that describes what is wrong.
+ * </p>
+ *
+ * @author Kevin Saji
+ */
 public final class ProductLoader
 {
 	
+	/**
+	 * Reads every product in the data file into an array.
+	 * <p>
+	 * The file is always closed, whether loading succeeds or fails.
+	 * </p>
+	 *
+	 * @param fileName the name (and path) of the data file
+	 * @return an array holding one product per data line, in file order
+	 * @throws FileNotFoundException if the data file does not exist
+	 * @throws InvalidProductDataException if the count, a product type, or a
+	 *         price is invalid, or the file has fewer products than the count
+	 */
 	public static Product[] load( String fileName )
 			throws FileNotFoundException, InvalidProductDataException
 	{
@@ -39,6 +65,16 @@ public final class ProductLoader
 	}
 
 
+	/**
+	 * Reads the product count and then every product from an open scanner.
+	 *
+	 * @param in the scanner reading the data file
+	 * @param fileName the name of the data file, used in error messages
+	 * @return an array holding one product per data line, in file order
+	 * @throws InvalidProductDataException if the file is empty, the count, a
+	 *         product type, or a price is invalid, or the file has fewer
+	 *         products than the count says
+	 */
 	private static Product[] readProducts( Scanner in, String fileName ) throws InvalidProductDataException
 	{
 		if( !in.hasNext() )
@@ -68,6 +104,14 @@ public final class ProductLoader
 	}
 
 
+	/**
+	 * Converts the first value in the file into the product count.
+	 *
+	 * @param value the first value read from the file
+	 * @return the number of products in the file
+	 * @throws InvalidProductDataException if the value is not a whole number
+	 *         or is negative
+	 */
 	private static int parseCount( String value ) throws InvalidProductDataException
 	{
 		int count;
@@ -91,6 +135,17 @@ public final class ProductLoader
 	}
 
 
+	/**
+	 * Reads the next value in the file as a price.
+	 *
+	 * @param in the scanner reading the data file
+	 * @param type the product type on the current line, used in error messages
+	 * @param productNumber the position of the product in the file, used in
+	 *        error messages
+	 * @return the price
+	 * @throws InvalidProductDataException if the price is missing or is not
+	 *         a number
+	 */
 	private static double parsePrice( Scanner in, String type, int productNumber )
 			throws InvalidProductDataException
 	{
@@ -114,6 +169,18 @@ public final class ProductLoader
 	}
 
 
+	/**
+	 * Creates the subclass of {@link Product} that matches the product type.
+	 *
+	 * @param type the product type, for example Jeans
+	 * @param originalPrice the product's original price
+	 * @param updatedPrice the product's updated price
+	 * @param productNumber the position of the product in the file, used in
+	 *        error messages
+	 * @return a new product of the matching subclass
+	 * @throws InvalidProductDataException if the type is not one of the seven
+	 *         product types
+	 */
 	private static Product createProduct( String type, double originalPrice, double updatedPrice,
 			int productNumber ) throws InvalidProductDataException
 	{
