@@ -141,7 +141,7 @@ public class AppDriver
 		long elapsed = System.nanoTime() - start;
 
 		displayResults( products, compareType );
-		System.out.println( sortName( sortAlg ) + " run time was: " + elapsed + " milliseconds" );
+		System.out.println( sortName( sortAlg ) + " run time was: " + elapsed + " nanoseconds" );
 		
 	}
 	
