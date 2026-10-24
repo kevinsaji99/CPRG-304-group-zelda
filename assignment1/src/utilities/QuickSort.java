@@ -1,3 +1,4 @@
+
 package utilities;
 
 import java.util.Comparator;
@@ -5,21 +6,40 @@ import java.util.Comparator;
 import products.Product;
 
 /**
- * Quick sort utility that arranges products in descending order.
+ * Sorts products in descending order using quick sort with median-of-three
+ * pivot selection and three-way partitioning.
  *
  * @author Gaurab Sapkota
  */
 public final class QuickSort
 {
+    /**
+     * Prevents instances of this utility class from being created.
+     */
     private QuickSort()
     {
     }
 
+    /**
+     * Sorts the products in descending order using their natural ordering.
+     *
+     * @param array the array of products to sort in place
+     * @throws NullPointerException if a product comparison encounters null
+     */
     public static void sort(Product[] array)
     {
         sort(array, null);
     }
 
+    /**
+     * Sorts the products in descending order using the supplied comparator,
+     * or their natural ordering if the comparator is null.
+     *
+     * @param array the array of products to sort in place
+     * @param comp the comparator to use, or null for natural ordering
+     * @throws NullPointerException if a product comparison encounters null
+     *         or the supplied comparator throws this exception
+     */
     public static void sort(Product[] array, Comparator<Product> comp)
     {
         if (array == null || array.length < 2)
@@ -30,9 +50,19 @@ public final class QuickSort
         quickSort(array, 0, array.length - 1, comp);
     }
 
-    private static void quickSort(Product[] array,
-                                  int low,
-                                  int high,
+    /**
+     * Sorts the specified section of the array using three-way partitioning.
+     * Products greater than the pivot move left, smaller products move right,
+     * and equal products remain in the middle section.
+     *
+     * @param array the array being sorted
+     * @param low the first index of the section to sort
+     * @param high the last index of the section to sort
+     * @param comp the comparator to use, or null for natural ordering
+     * @throws NullPointerException if a product comparison encounters null
+     *         or the supplied comparator throws this exception
+     */
+    private static void quickSort(Product[] array, int low, int high,
                                   Comparator<Product> comp)
     {
         if (low >= high)
@@ -56,8 +86,6 @@ public final class QuickSort
         {
             int result = compare(array[current], pivot, comp);
 
-            // Descending order:
-            // larger elements move left
             if (result > 0)
             {
                 swap(array, greater, current);
@@ -79,8 +107,18 @@ public final class QuickSort
         quickSort(array, smaller + 1, high, comp);
     }
 
-    private static Product medianOfThree(Product first,
-                                         Product second,
+    /**
+     * Selects the median of three products according to the chosen ordering.
+     *
+     * @param first the first product
+     * @param second the second product
+     * @param third the third product
+     * @param comp the comparator to use, or null for natural ordering
+     * @return the product whose ordering falls between the other two
+     * @throws NullPointerException if a product comparison encounters null
+     *         or the supplied comparator throws this exception
+     */
+    private static Product medianOfThree(Product first, Product second,
                                          Product third,
                                          Comparator<Product> comp)
     {
@@ -116,8 +154,19 @@ public final class QuickSort
         }
     }
 
-    private static int compare(Product p1,
-                               Product p2,
+    /**
+     * Compares two products using the supplied comparator or their natural
+     * ordering when no comparator is provided.
+     *
+     * @param p1 the first product
+     * @param p2 the second product
+     * @param comp the comparator to use, or null for natural ordering
+     * @return a negative integer, zero, or a positive integer according to
+     *         the ordering of the two products
+     * @throws NullPointerException if a product comparison encounters null
+     *         or the supplied comparator throws this exception
+     */
+    private static int compare(Product p1, Product p2,
                                Comparator<Product> comp)
     {
         if (comp == null)
@@ -130,9 +179,14 @@ public final class QuickSort
         }
     }
 
-    private static void swap(Product[] array,
-                             int first,
-                             int second)
+    /**
+     * Exchanges the products at two positions in the array.
+     *
+     * @param array the array containing the products
+     * @param first the index of the first product
+     * @param second the index of the second product
+     */
+    private static void swap(Product[] array, int first, int second)
     {
         Product temp = array[first];
         array[first] = array[second];
