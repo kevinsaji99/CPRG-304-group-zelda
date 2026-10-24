@@ -3,7 +3,6 @@ package products;
 /**
  * Represents a dress product. The real price difference for a dress
  * is adjusted by a factor of 0.6.
- * @author Kevin Saji
  */
 public class Dresses extends Product {
 
