@@ -11,16 +11,31 @@ import products.Product;
  * product into the gap that opens up. Products end up in descending order
  * (largest to smallest).
  * </p>
+ * 
+ * @author Tejanpreet Singh Dherdi
  */
 
 
 public class InsertionSort {
+	
+	/**
+	 * Sorts the products in descending order using their natural ordering,
+	 * which compares the calculated real difference of each product.
+	 *
+	 * @param array (the products to sort, rearranged in place)
+	 */
 	
 	public static void sort (Product[] array)
 	{
 		insertionSort(array , null);
 	}
 	
+	/**
+	 * Sorts the products in descending order using the supplied comparator.
+	 *
+	 * @param array (the products to sort, rearranged in place)
+	 * @param comp  (the comparator that defines the ordering)
+	 */
 	public static void sort(Product[] array , Comparator<Product> comp)
 	{
 		insertionSort( array , comp);
