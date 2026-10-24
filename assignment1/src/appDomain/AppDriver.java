@@ -304,7 +304,7 @@ public class AppDriver
 		System.out.println( "  -s  b = bubble, s = selection, i = insertion, m = merge, q = quick, z = custom" );
 		
 	}
-};
+}
 
 
  
