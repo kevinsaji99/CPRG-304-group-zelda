@@ -6,7 +6,6 @@ import products.Product;
 
 /**
  * Quick sort utility that arranges products in descending order.
- *It uses median-of-three pivot selection and three-way partitioning.
  *
  * @author Gaurab Sapkota
  */
