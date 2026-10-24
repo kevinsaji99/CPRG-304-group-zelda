@@ -33,9 +33,7 @@ Dresses 3.81 98.82
 Shoes 84.32 100.41
 Shoes 56.98 81.38
 Skirts 84.26 100.47
-
-
-
+Shorts 5.06 88.88
 Shorts 98.86 166.07
 Skirts 56.84 73.52
 Shoes 8.66 29.52
