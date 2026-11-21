@@ -1,26 +1,86 @@
+
 package implementations;
 
 /**
- * A single node in a doubly linked list (DLL), used as the building block
- * for {@link MyDLL} in CPRG 304 at SAIT.
- * <p>
- * Each node stores a {@link String} element and maintains two directional
- * references: a predecessor ({@code pred}) pointing to the node immediately
- * before it in the chain, and a successor ({@code succ}) pointing to the
- * node immediately after it. A {@code null} predecessor indicates the node
- * is the head of the list; a {@code null} successor indicates it is the tail.
- * </p>
- *
- * <p><strong>Design Note – String-Specific Implementation:</strong><br>
- * This class is intentionally designed to store {@link String} elements only.
- * A fully reusable, type-safe design would use Java generics (e.g.,
- * {@code DLLNode<E>}), allowing any object type to be stored in the node.
- * Generic programming is outside the scope of CPRG 304 and has therefore
- * been omitted. All element fields, parameters, and return types are fixed
- * as {@link String} throughout this class and its usages.
- * </p>
+ * A single node in a doubly linked list.
+ * Each node stores a String and references to its predecessor
+ * and successor.
  */
 public class MyDLLNode
 {
+    private String data;
+    private MyDLLNode pred;
+    private MyDLLNode succ;
 
+    /**
+     * Creates a node containing the specified String.
+     *
+     * @param data the String stored in this node
+     */
+    public MyDLLNode(String data)
+    {
+        this.data = data;
+        this.pred = null;
+        this.succ = null;
+    }
+
+    /**
+     * Returns the data stored in this node.
+     *
+     * @return the stored String
+     */
+    public String getData()
+    {
+        return data;
+    }
+
+    /**
+     * Updates the data stored in this node.
+     *
+     * @param data the new String
+     */
+    public void setData(String data)
+    {
+        this.data = data;
+    }
+
+    /**
+     * Returns the predecessor node.
+     *
+     * @return the previous node, or null if this is the head
+     */
+    public MyDLLNode getPred()
+    {
+        return pred;
+    }
+
+    /**
+     * Sets the predecessor node.
+     *
+     * @param pred the previous node
+     */
+    public void setPred(MyDLLNode pred)
+    {
+        this.pred = pred;
+    }
+
+    /**
+     * Returns the successor node.
+     *
+     * @return the next node, or null if this is the tail
+     */
+    public MyDLLNode getSucc()
+    {
+        return succ;
+    }
+
+    /**
+     * Sets the successor node.
+     *
+     * @param succ the next node
+     */
+    public void setSucc(MyDLLNode succ)
+    {
+        this.succ = succ;
+    }
 }
