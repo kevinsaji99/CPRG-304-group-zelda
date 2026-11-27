@@ -29,15 +29,28 @@ import utilities.StackADT;
 public class MyStack implements StackADT
 {
 	/**
-	 * Index 0 = bottom of the stack , index size()-1 = top.
-	 */
+     * Underlying storage. Index 0 is the bottom of the stack and
+     * index {@code size() - 1} is the top.
+     */
 	
 	private final ListADT list;
+	
+	/**
+     * Creates a new, empty stack backed by a {@link MyArrayList}.
+     */
 	
 	public MyStack()
 	{
 		list = new MyArrayList();
 	}
+	
+	/**
+     * Pushes the specified element onto the top of this stack by appending
+     * it to the end of the underlying list.
+     *
+     * @param toAdd  the {@link String} element to push; must not be {@code null}
+     * @throws NullPointerException if {@code toAdd} is {@code null}
+     */
 	
 	@Override
 	public void push(String toAdd) throws NullPointerException
@@ -49,6 +62,13 @@ public class MyStack implements StackADT
 		list.add(toAdd);
 	}
 	
+	 /**
+     * Removes and returns the element at the top of this stack.
+     *
+     * @return the {@link String} element removed from the top of the stack
+     * @throws EmptyStackException if the stack contains no elements
+     */
+	
 	@Override
 	public String pop() throws EmptyStackException
 	{
@@ -58,6 +78,13 @@ public class MyStack implements StackADT
         }
         return list.remove( list.size() - 1 );
 	}
+	
+	 /**
+     * Returns the element at the top of this stack without removing it.
+     *
+     * @return the {@link String} element currently at the top of the stack
+     * @throws EmptyStackException if the stack contains no elements
+     */
 	
 	@Override
     public String peek() throws EmptyStackException
@@ -69,17 +96,37 @@ public class MyStack implements StackADT
         return list.get( list.size() - 1 );
     }
 	
+	 /**
+     * Removes all elements from this stack, leaving it empty.
+     */
+	
 	 @Override
 	    public void clear()
 	    {
 	        list.clear();
 	    }
 	 
+	 /**
+	     * Returns {@code true} if this stack contains no elements.
+	     *
+	     * @return {@code true} if the stack is empty; {@code false} otherwise
+	     */
+	 
 	 @Override
 	    public boolean isEmpty()
 	    {
 	        return list.isEmpty();
 	    }
+	 
+	 /**
+	     * Copies all elements of this stack into an array in bottom-to-top order.
+	     * If the provided array is large enough it is filled and returned;
+	     * otherwise a new array of sufficient size is allocated and returned.
+	     *
+	     * @param holder  the array to fill; must not be {@code null}
+	     * @return an array containing all elements of this stack, bottom to top
+	     * @throws NullPointerException if {@code holder} is {@code null}
+	     */
 	 
 	 @Override
 	 public String[] toArray(String[] holder) throws NullPointerException 
@@ -91,6 +138,15 @@ public class MyStack implements StackADT
 	        return list.toArray( holder );
 	 }
 	 
+	 /**
+	     * Returns {@code true} if this stack contains at least one occurrence of
+	     * the specified element, compared using {@link String#equals(Object)}.
+	     *
+	     * @param toFind  the element to search for; must not be {@code null}
+	     * @return {@code true} if the element is present; {@code false} otherwise
+	     * @throws NullPointerException if {@code toFind} is {@code null}
+	     */
+	 
 	 @Override
 	    public boolean contains( String toFind ) throws NullPointerException
 	    {
@@ -101,6 +157,16 @@ public class MyStack implements StackADT
 	        return list.contains( toFind );
 	    }
 
+	 /**
+	     * Returns the 1-based position of the specified element measured from the
+	     * top of this stack. The top element is at position 1. If the element
+	     * occurs more than once, the occurrence nearest the top is used.
+	     * A {@code null} argument can never be present, so it returns {@code -1}.
+	     *
+	     * @param toFind  the element to search for
+	     * @return the 1-based distance from the top, or {@code -1} if not found
+	     */
+	 
 	 @Override
 	    public int search( String toFind )
 	    {
@@ -108,6 +174,9 @@ public class MyStack implements StackADT
 	        {
 	            return -1;
 	        }
+	        
+	        // Scan from the top (end of list) toward the bottom (index 0) so the
+	        // occurrence nearest the top is found first.
 	        for( int i = list.size() - 1; i >= 0; i-- )
 	        {
 	            if( toFind.equals( list.get( i ) ) )
@@ -118,11 +187,29 @@ public class MyStack implements StackADT
 	        return -1;
 	    }
 	
+	 /**
+	     * Returns an iterator over the elements of this stack in bottom-to-top
+	     * order. The iterator traverses its own deep copy of the elements, so it
+	     * is unaffected by later changes to the stack.
+	     *
+	     * @return an {@link Iterator} over this stack, bottom to top
+	     */
+	 
 	 @Override
 	    public Iterator iterator()
 	    {
 	        return list.iterator();
 	    }
+	 
+	 /**
+	     * Compares this stack to another stack for equality. Two stacks are equal
+	     * if they hold equal elements in the same bottom-to-top order.
+	     *
+	     * @param that  the stack to compare to; a {@code null} argument returns
+	     *              {@code false}
+	     * @return {@code true} if both stacks contain equal elements in the same
+	     *         order; {@code false} otherwise
+	     */
 	 
 	 @Override
 	    public boolean equals( StackADT that )
@@ -147,6 +234,12 @@ public class MyStack implements StackADT
 	        return true;
 	    }
 
+	  /**
+	     * Returns the number of elements currently in this stack.
+	     *
+	     * @return the current depth of the stack; never negative
+	     */
+	 
 	    @Override
 	    public int size()
 	    {
